@@ -565,9 +565,12 @@
     let spotifyController;
     let musicStartRequested = false;
     function startMusic() {
-      if (musicStartRequested) return;
-      musicStartRequested = true;
-      if (spotifyController) spotifyController.play();
+      if (!spotifyController) {
+        musicStartRequested = true;
+        return;
+      }
+      musicStartRequested = false;
+      spotifyController.play();
     }
     function startMusicFromPage() {
       startMusic();
@@ -591,7 +594,13 @@
           window.removeEventListener("pointerdown", startMusicFromPage);
           window.removeEventListener("keydown", startMusicFromPage);
         });
-        controller.addListener("ready", () => controller.play());
+        controller.addListener("ready", () => {
+          if (musicStartRequested) {
+            startMusic();
+          } else {
+            controller.play();
+          }
+        });
       });
     };
     rsvpForm.addEventListener("submit", (event) => {
