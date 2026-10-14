@@ -178,6 +178,19 @@
     .detail-row dt { color: var(--muted); font-size: 11px; text-transform: uppercase; }
     .detail-row dd { margin: 0; font-family: var(--serif); font-size: 23px; }
     .detail-row .mix-thai-english { font-family: "Mitr", "Noto Sans Thai", "DM Sans", sans-serif; }
+    .dress-colors {
+      display: flex;
+      gap: 8px;
+      margin: 10px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .dress-colors li {
+      width: 18px;
+      height: 18px;
+      border: 1px solid rgba(36, 59, 50, .2);
+      border-radius: 50%;
+    }
     .details-caption { margin: 22px 0 0; color: var(--muted); font-size: 12px; line-height: 1.7; }
 
     .rsvp {
@@ -325,7 +338,16 @@
           </div>
           <div class="detail-row">
             <dt>Dress</dt>
-            <dd class="mix-thai-english">Dress Thai Style<br>ชุดสไตล์ไทย</dd>
+            <dd class="mix-thai-english">
+              Dress Thai Style<br>ชุดสไตล์ไทย
+              <ul class="dress-colors" aria-label="Dress color options">
+                <li aria-label="#f4e2ca" style="background-color: #f4e2ca"></li>
+                <li aria-label="#926812" style="background-color: #926812"></li>
+                <li aria-label="#989e70" style="background-color: #989e70"></li>
+                <li aria-label="#87a4b5" style="background-color: #87a4b5"></li>
+                <li aria-label="#dfb3a6" style="background-color: #dfb3a6"></li>
+              </ul>
+            </dd>
           </div>
         </dl>
         <p class="details-caption">More little details will find their way here soon. For now, we're just happy you're part of our story.</p>
