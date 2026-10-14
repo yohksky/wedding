@@ -178,6 +178,12 @@
     .detail-row dt { color: var(--muted); font-size: 11px; text-transform: uppercase; }
     .detail-row dd { margin: 0; font-family: var(--serif); font-size: 23px; }
     .detail-row .mix-thai-english { font-family: "Mitr", "Noto Sans Thai", "DM Sans", sans-serif; }
+    .location-qr {
+      display: block;
+      width: min(150px, 100%);
+      height: auto;
+      margin-top: 12px;
+    }
     .dress-colors {
       display: flex;
       gap: 8px;
@@ -334,7 +340,10 @@
           </div>
           <div class="detail-row">
             <dt>Where</dt>
-            <dd class="mix-thai-english"><a href="https://maps.app.goo.gl/hdCLKUyLGZvyuhxg9" target="_blank" rel="noopener noreferrer">วัดชลประทานรังสฤษดิ์ โถงพุทธปัญญา ชั้น1</a></dd>
+            <dd class="mix-thai-english">
+              <a href="https://maps.app.goo.gl/hdCLKUyLGZvyuhxg9" target="_blank" rel="noopener noreferrer">วัดชลประทานรังสฤษดิ์ โถงพุทธปัญญา ชั้น1</a>
+              <img class="location-qr" src="Static/location_qr.jpg" alt="QR code for the wedding venue location">
+            </dd>
           </div>
           <div class="detail-row">
             <dt>Dress</dt>
