@@ -424,12 +424,12 @@
     </section>
 
     <section class="music" aria-labelledby="music-title">
-      <div>
-        <!-- <p class="eyebrow">A song for our day</p>
+      <!-- <div>
+        <p class="eyebrow">A song for our day</p>
         <h2 id="music-title">Best Part</h2>
-        <p>Daniel Caesar feat. H.E.R.</p> -->
-        <button class="music-play-button" id="music-play" type="button" hidden>Play the song</button>
-      </div>
+        <p>Daniel Caesar feat. H.E.R.</p> 
+        <button class="music-play-button" id="music-play" type="button" disabled>Start the music</button>
+      </div>-->
       <div id="music-player">
         <iframe
           class="music-track"
@@ -562,8 +562,21 @@
     rsvpDialog.addEventListener("click", (event) => {
       if (event.target === rsvpDialog) rsvpDialog.close();
     });
-    musicPlayButton.addEventListener("click", () => spotifyController.play());
     let spotifyController;
+    let musicStartRequested = false;
+    function startMusic() {
+      if (musicStartRequested) return;
+      musicStartRequested = true;
+      if (spotifyController) spotifyController.play();
+    }
+    function startMusicFromPage() {
+      startMusic();
+      window.removeEventListener("pointerdown", startMusicFromPage);
+      window.removeEventListener("keydown", startMusicFromPage);
+    }
+    window.addEventListener("pointerdown", startMusicFromPage);
+    window.addEventListener("keydown", startMusicFromPage);
+    musicPlayButton.addEventListener("click", startMusic);
     window.onSpotifyIframeApiReady = (IFrameAPI) => {
       musicPlayer.querySelector("iframe").remove();
       IFrameAPI.createController(musicPlayer, {
@@ -572,9 +585,11 @@
         height: 152
       }, (controller) => {
         spotifyController = controller;
-        musicPlayButton.hidden = false;
+        musicPlayButton.disabled = false;
         controller.addListener("playback_started", () => {
           musicPlayButton.hidden = true;
+          window.removeEventListener("pointerdown", startMusicFromPage);
+          window.removeEventListener("keydown", startMusicFromPage);
         });
         controller.addListener("ready", () => controller.play());
       });
