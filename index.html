@@ -149,9 +149,12 @@
       font-size: 18px;
       line-height: 1;
     }
-    .hero-controls button:hover { background: rgba(20, 30, 25, .48); }
-    .hero-controls button:focus-visible { outline: 2px solid #fffaf1; outline-offset: 3px; }
-    .hero-counter { min-width: 42px; font-size: 10px; text-align: center; }
+    .hero-controls button:hover,
+    .details-photo-controls button:hover { background: rgba(20, 30, 25, .48); }
+    .hero-controls button:focus-visible,
+    .details-photo-controls button:focus-visible { outline: 2px solid #fffaf1; outline-offset: 3px; }
+    .hero-counter,
+    .details-photo-counter { min-width: 42px; font-size: 10px; text-align: center; }
 
     .intro {
       position: relative;
@@ -233,8 +236,44 @@
       background: #e6e8dc;
     }
     .details-photo {
+      position: relative;
       min-height: 580px;
-      background: #8b8974 url("https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=85") center / cover no-repeat;
+      overflow: hidden;
+      background: #8b8974;
+    }
+    .details-photo-slide {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    .details-photo-slide.is-active { opacity: 1; }
+    .details-photo-controls {
+      position: absolute;
+      z-index: 1;
+      right: 24px;
+      bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #fffaf1;
+    }
+    .details-photo-controls button {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border: 1px solid rgba(255, 250, 241, .7);
+      border-radius: 50%;
+      background: rgba(20, 30, 25, .35);
+      color: #fffaf1;
+      cursor: pointer;
+      font-size: 18px;
+      line-height: 1;
     }
     .details-content {
       display: flex;
@@ -283,6 +322,7 @@
     .rsvp h2 { font-size: clamp(48px, 7vw, 86px); }
     .rsvp p:not(.eyebrow) { margin: 20px auto 0; color: var(--muted); font-size: 13px; line-height: 1.8; }
     .rsvp-body-text-size { font-size: 32px; }
+    .italic-text-style { font-style: italic; }
     .rsvp-button {
       display: inline-flex;
       align-items: center;
@@ -378,7 +418,8 @@
       .intro-copy { margin: auto; }
       .music { grid-template-columns: 1fr; gap: 24px; padding: 55px 9vw; }
       .details { grid-template-columns: 1fr; }
-      .details-photo { min-height: 58vh; min-height: 58svh; background-position: center 43%; }
+      .details-photo { min-height: 58vh; min-height: 58svh; }
+      .details-photo-controls { right: 6vw; bottom: 20px; }
       .details-content { padding: 75px 9vw 82px; }
       .detail-row { grid-template-columns: 95px 1fr; gap: 14px; }
       .detail-row dd { font-size: 21px; }
@@ -387,7 +428,7 @@
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
-      .hero-slide { transition-duration: .01ms; }
+      .hero-slide, .details-photo-slide { transition-duration: .01ms; }
     }
   </style>
 </head>
@@ -450,7 +491,18 @@
     </section>
 
     <section class="details" id="celebration" aria-labelledby="details-title">
-      <div class="details-photo" role="img" aria-label="A joyful moment shared by a couple on their wedding day"></div>
+      <div class="details-photo" role="region" aria-label="Wedding photo slideshow" aria-roledescription="carousel">
+        <img class="details-photo-slide is-active" src="static/body/1__66551842.jpg" alt="Wedding photo 1">
+        <img class="details-photo-slide" src="static/body/2__66551838.jpg" alt="Wedding photo 2">
+        <img class="details-photo-slide" src="static/body/3__66551830.jpg" alt="Wedding photo 3">
+        <img class="details-photo-slide" src="static/body/4__66551833.jpg" alt="Wedding photo 4">
+        <img class="details-photo-slide" src="static/body/5__66551837.jpg" alt="Wedding photo 5">
+        <div class="details-photo-controls" role="group" aria-label="Wedding photo slideshow controls">
+          <button class="details-photo-previous" type="button" aria-label="Show previous wedding photo">‹</button>
+          <span class="details-photo-counter" aria-live="polite">1 / 5</span>
+          <button class="details-photo-next" type="button" aria-label="Show next wedding photo">›</button>
+        </div>
+      </div>
       <div class="details-content">
         <p class="eyebrow">Keep a little room in your calendar</p>
         <h2 id="details-title">The day<br>we say “I do.”</h2>
@@ -486,7 +538,7 @@
     <section class="rsvp" id="rsvp" aria-labelledby="rsvp-title">
       
       <h2 id="rsvp-title">R.S.V.P.</h2><br>
-      <p class="eyebrow rsvp-body-text-size mix-thai-english">"เพื่อให้เราสามารถวางแผนในการดูแลท่าน ซึ่งเป็นแขกคนสำคัญอย่างเต็มที่ ขอรบกวนทุกท่านทำแบบตอบรับการเข้าร่วมงานให้เราด้วยนะคะ/ครับ"</p>
+      <p class="eyebrow rsvp-body-text-size mix-thai-english italic-text-style;">"เพื่อให้เราสามารถวางแผนในการดูแลท่าน ซึ่งเป็นแขกคนสำคัญอย่างเต็มที่ ขอรบกวนทุกท่านทำแบบตอบรับการเข้าร่วมงานให้เราด้วยนะคะ/ครับ"</p>
       <p class="rsvp-body-text-size">HOPE TO SEE YOU AT OUR WEDDING</p>
       <a class="rsvp-body-text-size mix-thai-english rsvp-button"  href="https://forms.gle/uydZPbwFjXtJKRRX6">กดเพื่อลงทะเบียนเข้าร่วมงาน</a>
     </section>
@@ -503,8 +555,12 @@
     const musicPlayButton = document.querySelector("#music-play");
     const heroSlides = Array.from(document.querySelectorAll(".hero-slide"));
     const heroCounter = document.querySelector(".hero-counter");
+    const detailsPhotoSlides = Array.from(document.querySelectorAll(".details-photo-slide"));
+    const detailsPhotoCounter = document.querySelector(".details-photo-counter");
     let currentHeroSlide = 0;
     let heroSlideTimer;
+    let currentDetailsPhoto = 0;
+    let detailsPhotoTimer;
 
     function showHeroSlide(index) {
       currentHeroSlide = (index + heroSlides.length) % heroSlides.length;
@@ -521,6 +577,23 @@
       }
     }
 
+    function showDetailsPhoto(index) {
+      currentDetailsPhoto = (index + detailsPhotoSlides.length) % detailsPhotoSlides.length;
+      detailsPhotoSlides.forEach((slide, slideIndex) => {
+        const isActive = slideIndex === currentDetailsPhoto;
+        slide.classList.toggle("is-active", isActive);
+        slide.setAttribute("aria-hidden", String(!isActive));
+      });
+      detailsPhotoCounter.textContent = `${currentDetailsPhoto + 1} / ${detailsPhotoSlides.length}`;
+    }
+
+    function resetDetailsPhotoTimer() {
+      window.clearInterval(detailsPhotoTimer);
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        detailsPhotoTimer = window.setInterval(() => showDetailsPhoto(currentDetailsPhoto + 1), 5000);
+      }
+    }
+
     document.querySelector(".hero-previous").addEventListener("click", () => {
       showHeroSlide(currentHeroSlide - 1);
       resetHeroSlideTimer();
@@ -529,7 +602,17 @@
       showHeroSlide(currentHeroSlide + 1);
       resetHeroSlideTimer();
     });
+    document.querySelector(".details-photo-previous").addEventListener("click", () => {
+      showDetailsPhoto(currentDetailsPhoto - 1);
+      resetDetailsPhotoTimer();
+    });
+    document.querySelector(".details-photo-next").addEventListener("click", () => {
+      showDetailsPhoto(currentDetailsPhoto + 1);
+      resetDetailsPhotoTimer();
+    });
     resetHeroSlideTimer();
+    showDetailsPhoto(currentDetailsPhoto);
+    resetDetailsPhotoTimer();
 
     if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       requestAnimationFrame(() => {
