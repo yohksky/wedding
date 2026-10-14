@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f0e8">
+  <meta name="description" content="Yohk and Sky are getting married. Join them for a day filled with love, laughter, and good company.">
+  <title>Yohk &amp; Sky — We're getting married</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Italiana&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f4f0e8;
+      --ink: #243b32;
+      --olive: #758064;
+      --coral: #b96e59;
+      --muted: #74776b;
+      --line: rgba(36, 59, 50, .22);
+      --serif: "Italiana", "Times New Roman", serif;
+      --sans: "DM Sans", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+    button, input, select { font: inherit; }
+
+    .hero {
+      position: relative;
+      display: grid;
+      min-height: min(850px, 94svh);
+      overflow: hidden;
+      color: #fffaf1;
+      background: #6c6654 url("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2200&q=88") center 48% / cover no-repeat;
+      isolation: isolate;
+    }
+    .hero::before {
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(20, 30, 25, .56), rgba(20, 30, 25, .08) 75%), linear-gradient(0deg, rgba(20, 30, 25, .35), transparent 58%);
+      content: "";
+    }
+    .topline {
+      position: absolute;
+      top: 34px;
+      left: 5.5vw;
+      right: 5.5vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+    .monogram { font-family: var(--serif); font-size: 23px; text-transform: none; }
+    .topline a { text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.55); padding-bottom: 5px; }
+    .hero-copy {
+      width: min(1100px, 88vw);
+      margin: auto auto 11vh 10vw;
+      padding: 120px 0 4vh;
+      animation: arrive .8s ease-out both;
+    }
+    .eyebrow {
+      margin: 0 0 21px;
+      font-size: 11px;
+      line-height: 1.5;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(72px, 12vw, 164px);
+      font-weight: 400;
+      line-height: .78;
+    }
+    h1 span { color: #e4a18b; font-style: italic; }
+    .hero-note {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-top: 38px;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+    .hero-note::before { width: 40px; height: 1px; background: #e4a18b; content: ""; }
+    .scroll-cue {
+      position: absolute;
+      right: 5.5vw;
+      bottom: 39px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 10px;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    .scroll-cue::after { width: 35px; height: 1px; background: #fffaf1; content: ""; }
+
+    .intro {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8vw;
+      align-items: center;
+      padding: 120px 13vw 125px;
+      overflow: hidden;
+    }
+    .intro::after {
+      position: absolute;
+      right: 8%;
+      bottom: -90px;
+      width: 210px;
+      height: 210px;
+      border: 1px solid rgba(185, 110, 89, .28);
+      border-radius: 50%;
+      content: "";
+    }
+    .intro-mark {
+      color: var(--coral);
+      font-family: var(--serif);
+      font-size: clamp(100px, 19vw, 240px);
+      line-height: .7;
+      text-align: center;
+    }
+    .intro-copy { max-width: 460px; }
+    .intro-copy .eyebrow { color: var(--coral); }
+    h2 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(44px, 5.5vw, 72px);
+      font-weight: 400;
+      line-height: .98;
+    }
+    .intro-copy p:not(.eyebrow) {
+      max-width: 370px;
+      margin: 25px 0 0;
+      color: #59635a;
+      font-size: 14px;
+      line-height: 1.9;
+    }
+
+    .details {
+      display: grid;
+      grid-template-columns: .72fr 1.28fr;
+      background: #e6e8dc;
+    }
+    .details-photo {
+      min-height: 580px;
+      background: #8b8974 url("https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=85") center / cover no-repeat;
+    }
+    .details-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 90px clamp(42px, 10vw, 150px);
+    }
+    .details-content .eyebrow { color: var(--coral); }
+    .detail-list { margin: 38px 0 0; border-top: 1px solid var(--line); }
+    .detail-row {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 20px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .detail-row dt { color: var(--muted); font-size: 11px; text-transform: uppercase; }
+    .detail-row dd { margin: 0; font-family: var(--serif); font-size: 23px; }
+    .details-caption { margin: 22px 0 0; color: var(--muted); font-size: 12px; line-height: 1.7; }
+
+    .rsvp {
+      padding: 105px 8vw 115px;
+      text-align: center;
+    }
+    .rsvp .eyebrow { color: var(--coral); }
+    .rsvp h2 { font-size: clamp(48px, 7vw, 86px); }
+    .rsvp p:not(.eyebrow) { margin: 20px auto 0; color: var(--muted); font-size: 13px; line-height: 1.8; }
+    .rsvp-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 20px;
+      margin-top: 30px;
+      padding: 14px 0;
+      border: 0;
+      border-bottom: 1px solid var(--ink);
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+    .rsvp-button::after { content: "↗"; font-size: 17px; }
+    .rsvp-button:focus-visible, a:focus-visible { outline: 2px solid var(--coral); outline-offset: 5px; }
+    footer {
+      display: flex;
+      justify-content: space-between;
+      padding: 24px 5.5vw;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 10px;
+      text-transform: uppercase;
+    }
+
+    dialog {
+      width: min(460px, calc(100% - 32px));
+      padding: 42px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+    }
+    dialog::backdrop { background: rgba(20, 30, 25, .58); backdrop-filter: blur(3px); }
+    .dialog-close {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      border: 0;
+      background: none;
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 22px;
+    }
+    dialog h2 { font-size: 46px; }
+    .form-field { display: grid; gap: 8px; margin-top: 22px; text-align: left; }
+    .form-field label { color: var(--muted); font-size: 11px; text-transform: uppercase; }
+    .form-field input, .form-field select {
+      width: 100%;
+      padding: 12px 10px;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      border-radius: 0;
+      background: transparent;
+      color: var(--ink);
+    }
+    .form-submit {
+      width: 100%;
+      margin-top: 28px;
+      padding: 14px;
+      border: 0;
+      background: var(--ink);
+      color: var(--paper);
+      cursor: pointer;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+    .form-note { margin: 12px 0 0; color: var(--muted); font-size: 11px; line-height: 1.6; text-align: left; }
+    .status { min-height: 1.5em; color: var(--olive); font-size: 12px; }
+
+    @keyframes arrive {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 700px) {
+      .hero { min-height: 82svh; background-position: 56% center; }
+      .hero::before { background: linear-gradient(0deg, rgba(20, 30, 25, .6), rgba(20, 30, 25, .06) 85%); }
+      .topline { top: 23px; left: 6vw; right: 6vw; }
+      .hero-copy { width: 88vw; margin: auto auto 10vh 7vw; padding-bottom: 8vh; }
+      h1 { font-size: clamp(70px, 20vw, 124px); }
+      .hero-note { margin-top: 28px; font-size: 10px; }
+      .scroll-cue { right: 6vw; bottom: 25px; }
+      .intro { grid-template-columns: 1fr; gap: 55px; padding: 85px 9vw 95px; }
+      .intro-mark { font-size: 150px; }
+      .intro-copy { margin: auto; }
+      .details { grid-template-columns: 1fr; }
+      .details-photo { min-height: 58svh; background-position: center 43%; }
+      .details-content { padding: 75px 9vw 82px; }
+      .detail-row { grid-template-columns: 95px 1fr; gap: 14px; }
+      .detail-row dd { font-size: 21px; }
+      .rsvp { padding: 82px 8vw 90px; }
+      footer { gap: 18px; font-size: 9px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero" aria-labelledby="couple-names">
+      <div class="topline">
+        <span class="monogram">Y + S</span>
+        <a href="#celebration">The celebration</a>
+      </div>
+      <div class="hero-copy">
+        <p class="eyebrow">A little celebration of love</p>
+        <h1 id="couple-names">Yohk <span>&amp;</span><br>Sky</h1>
+        <div class="hero-note">We're getting married</div>
+      </div>
+      <a class="scroll-cue" href="#welcome">Come on in</a>
+    </section>
+
+    <section class="intro" id="welcome" aria-labelledby="welcome-title">
+      <div class="intro-mark" aria-hidden="true">&amp;</div>
+      <div class="intro-copy">
+        <p class="eyebrow">Together with our favorite people</p>
+        <h2 id="welcome-title">Our next chapter starts with you.</h2>
+        <p>We found our way to each other, and now we'd love to celebrate the beginning of our forever with the people who make life feel like home.</p>
+      </div>
+    </section>
+
+    <section class="details" id="celebration" aria-labelledby="details-title">
+      <div class="details-photo" role="img" aria-label="A joyful moment shared by a couple on their wedding day"></div>
+      <div class="details-content">
+        <p class="eyebrow">Keep a little room in your calendar</p>
+        <h2 id="details-title">The day<br>we say “I do.”</h2>
+        <dl class="detail-list">
+          <div class="detail-row">
+            <dt>When</dt>
+            <dd>Date to be announced</dd>
+          </div>
+          <div class="detail-row">
+            <dt>Where</dt>
+            <dd>Location to be announced</dd>
+          </div>
+          <div class="detail-row">
+            <dt>Dress</dt>
+            <dd>Come as your best self</dd>
+          </div>
+        </dl>
+        <p class="details-caption">More little details will find their way here soon. For now, we're just happy you're part of our story.</p>
+      </div>
+    </section>
+
+    <section class="rsvp" id="rsvp" aria-labelledby="rsvp-title">
+      <p class="eyebrow">A note from us</p>
+      <h2 id="rsvp-title">We hope you can make it.</h2>
+      <p>We can't wait to celebrate with you. Let us know you're thinking of us.</p>
+      <button class="rsvp-button" id="open-rsvp" type="button">Send a reply</button>
+    </section>
+  </main>
+
+  <footer>
+    <span>With love, Yohk &amp; Sky</span>
+    <span>Made for our favorite people</span>
+  </footer>
+
+  <dialog id="rsvp-dialog" aria-labelledby="rsvp-dialog-title">
+    <button class="dialog-close" type="button" aria-label="Close RSVP">×</button>
+    <p class="eyebrow">A little hello</p>
+    <h2 id="rsvp-dialog-title">Send us a note.</h2>
+    <form id="rsvp-form">
+      <div class="form-field">
+        <label for="guest-name">Your name</label>
+        <input id="guest-name" name="name" autocomplete="name" required>
+      </div>
+      <div class="form-field">
+        <label for="attendance">Will you celebrate with us?</label>
+        <select id="attendance" name="attendance" required>
+          <option value="" selected disabled>Choose a reply</option>
+          <option value="Joyfully accepts">Joyfully accepts</option>
+          <option value="Sends their love">Sends their love</option>
+        </select>
+      </div>
+      <button class="form-submit" type="submit">Prepare my reply</button>
+      <p class="form-note">We'll add our RSVP email here once plans are set. Until then, replies can't be sent from this card.</p>
+      <p class="status" id="form-status" role="status" aria-live="polite"></p>
+    </form>
+  </dialog>
+
+  <script>
+    const rsvpEmail = "";
+    const rsvpDialog = document.querySelector("#rsvp-dialog");
+    const rsvpForm = document.querySelector("#rsvp-form");
+    const formStatus = document.querySelector("#form-status");
+
+    document.querySelector("#open-rsvp").addEventListener("click", () => rsvpDialog.showModal());
+    document.querySelector(".dialog-close").addEventListener("click", () => rsvpDialog.close());
+    rsvpDialog.addEventListener("click", (event) => {
+      if (event.target === rsvpDialog) rsvpDialog.close();
+    });
+    rsvpForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const formData = new FormData(rsvpForm);
+      const subject = encodeURIComponent("Wedding reply for Yohk & Sky");
+      const body = encodeURIComponent(`${formData.get("name")}\n${formData.get("attendance")}`);
+      if (!rsvpEmail) {
+        formStatus.textContent = "No RSVP email is set yet. Your reply hasn't been sent.";
+        return;
+      }
+      window.location.href = `mailto:${rsvpEmail}?subject=${subject}&body=${body}`;
+      formStatus.textContent = "Your reply is ready in your email app.";
+    });
+  </script>
+</body>
+</html>
