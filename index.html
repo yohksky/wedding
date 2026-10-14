@@ -41,18 +41,35 @@
       min-height: min(850px, 94svh);
       overflow: hidden;
       color: #fffaf1;
-      background: #6c6654 url("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2200&q=88") center 48% / cover no-repeat;
+      background: #6c6654;
       isolation: isolate;
     }
+    .hero-slides {
+      position: absolute;
+      z-index: 0;
+      inset: 0;
+    }
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 48%;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    .hero-slide.is-active { opacity: 1; }
     .hero::before {
       position: absolute;
-      z-index: -1;
+      z-index: 1;
       inset: 0;
       background: linear-gradient(90deg, rgba(20, 30, 25, .56), rgba(20, 30, 25, .08) 75%), linear-gradient(0deg, rgba(20, 30, 25, .35), transparent 58%);
       content: "";
     }
     .topline {
       position: absolute;
+      z-index: 2;
       top: 34px;
       left: 5.5vw;
       right: 5.5vw;
@@ -65,6 +82,8 @@
     .monogram { font-family: var(--serif); font-size: 23px; text-transform: none; }
     .topline a { text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.55); padding-bottom: 5px; }
     .hero-copy {
+      position: relative;
+      z-index: 2;
       width: min(1100px, 88vw);
       margin: auto auto 11vh 10vw;
       padding: 120px 0 4vh;
@@ -97,6 +116,7 @@
     .hero-note::before { width: 40px; height: 1px; background: #e4a18b; content: ""; }
     .scroll-cue {
       position: absolute;
+      z-index: 2;
       right: 5.5vw;
       bottom: 39px;
       display: flex;
@@ -107,6 +127,31 @@
       text-transform: uppercase;
     }
     .scroll-cue::after { width: 35px; height: 1px; background: #fffaf1; content: ""; }
+    .hero-controls {
+      position: absolute;
+      z-index: 2;
+      right: 5.5vw;
+      bottom: 76px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .hero-controls button {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border: 1px solid rgba(255, 250, 241, .7);
+      border-radius: 50%;
+      background: rgba(20, 30, 25, .16);
+      color: #fffaf1;
+      cursor: pointer;
+      font-size: 18px;
+      line-height: 1;
+    }
+    .hero-controls button:hover { background: rgba(20, 30, 25, .48); }
+    .hero-controls button:focus-visible { outline: 2px solid #fffaf1; outline-offset: 3px; }
+    .hero-counter { min-width: 42px; font-size: 10px; text-align: center; }
 
     .intro {
       position: relative;
@@ -281,13 +326,15 @@
       to { opacity: 1; transform: translateY(0); }
     }
     @media (max-width: 700px) {
-      .hero { min-height: 82vh; min-height: 82svh; background-position: 56% center; }
+      .hero { min-height: 82vh; min-height: 82svh; }
       .hero::before { background: linear-gradient(0deg, rgba(20, 30, 25, .6), rgba(20, 30, 25, .06) 85%); }
+      .hero-slide { object-position: 56% center; }
       .topline { top: 23px; left: 6vw; right: 6vw; }
       .hero-copy { width: 88vw; margin: auto auto 10vh 7vw; padding-bottom: 8vh; }
       h1 { font-size: clamp(70px, 20vw, 124px); }
       .hero-note { margin-top: 28px; font-size: 10px; }
       .scroll-cue { right: 6vw; bottom: 25px; }
+      .hero-controls { right: 6vw; bottom: 62px; }
       .intro { grid-template-columns: 1fr; gap: 55px; padding: 85px 9vw 95px; }
       .intro-mark { font-size: 150px; }
       .intro-copy { margin: auto; }
@@ -301,12 +348,19 @@
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+      .hero-slide { transition-duration: .01ms; }
     }
   </style>
 </head>
 <body>
   <main>
     <section class="hero" aria-labelledby="couple-names">
+      <div class="hero-slides" aria-hidden="true">
+        <img class="hero-slide is-active" src="static/head/S__66551831.jpg" alt="">
+        <img class="hero-slide" src="static/head/S__66551835.jpg" alt="">
+        <img class="hero-slide" src="static/head/S__66551836.jpg" alt="">
+        <img class="hero-slide" src="static/head/S__66551839.jpg" alt="">
+      </div>
       <div class="topline">
         <span class="monogram">Y + S</span>
         <a href="#celebration">The celebration</a>
@@ -317,6 +371,11 @@
         <div class="hero-note">We're getting married</div>
       </div>
       <a class="scroll-cue" href="#welcome">Come on in</a>
+      <div class="hero-controls" role="group" aria-label="Photo slideshow controls">
+        <button class="hero-previous" type="button" aria-label="Show previous photo">‹</button>
+        <span class="hero-counter" aria-live="polite">1 / 4</span>
+        <button class="hero-next" type="button" aria-label="Show next photo">›</button>
+      </div>
     </section>
 
     <section class="intro" id="welcome" aria-labelledby="welcome-title">
@@ -342,7 +401,7 @@
             <dt>Where</dt>
             <dd class="mix-thai-english">
               <a href="https://maps.app.goo.gl/hdCLKUyLGZvyuhxg9" target="_blank" rel="noopener noreferrer">วัดชลประทานรังสฤษดิ์ โถงพุทธปัญญา ชั้น1</a>
-              <img class="location-qr" src="Static/location_qr.jpg" alt="QR code for the wedding venue location">
+              <img class="location-qr" src="static/location_qr.jpg" alt="QR code for the wedding venue location">
             </dd>
           </div>
           <div class="detail-row">
@@ -405,6 +464,35 @@
     const rsvpDialog = document.querySelector("#rsvp-dialog");
     const rsvpForm = document.querySelector("#rsvp-form");
     const formStatus = document.querySelector("#form-status");
+    const heroSlides = Array.from(document.querySelectorAll(".hero-slide"));
+    const heroCounter = document.querySelector(".hero-counter");
+    let currentHeroSlide = 0;
+    let heroSlideTimer;
+
+    function showHeroSlide(index) {
+      currentHeroSlide = (index + heroSlides.length) % heroSlides.length;
+      heroSlides.forEach((slide, slideIndex) => {
+        slide.classList.toggle("is-active", slideIndex === currentHeroSlide);
+      });
+      heroCounter.textContent = `${currentHeroSlide + 1} / ${heroSlides.length}`;
+    }
+
+    function resetHeroSlideTimer() {
+      window.clearInterval(heroSlideTimer);
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        heroSlideTimer = window.setInterval(() => showHeroSlide(currentHeroSlide + 1), 5000);
+      }
+    }
+
+    document.querySelector(".hero-previous").addEventListener("click", () => {
+      showHeroSlide(currentHeroSlide - 1);
+      resetHeroSlideTimer();
+    });
+    document.querySelector(".hero-next").addEventListener("click", () => {
+      showHeroSlide(currentHeroSlide + 1);
+      resetHeroSlideTimer();
+    });
+    resetHeroSlideTimer();
 
     if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       requestAnimationFrame(() => {
