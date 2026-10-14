@@ -476,7 +476,7 @@
         <!-- <p class="eyebrow">A song for our day</p>
         <h2 id="music-title">Best Part</h2>
         <p>Daniel Caesar feat. H.E.R.</p> -->
-      <button class="music-play-button" id="music-play" type="button" disabled hidden>Play the song</button>
+      <button class="music-play-button" id="music-play" type="button" disabled>Play the song</button>
       <div id="music-player">
         <iframe
           class="music-track"
@@ -631,8 +631,6 @@
         height: 152
       }, (controller) => {
         spotifyController = controller;
-        musicPlayButton.hidden = false;
-        musicPlayButton.disabled = false;
         controller.addListener("playback_started", () => {
           musicPlayButton.hidden = true;
         });
