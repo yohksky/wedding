@@ -473,12 +473,10 @@
     </section>
 
     <section class="music" aria-labelledby="music-title">
-      <!-- <div>
-        <p class="eyebrow">A song for our day</p>
+        <!-- <p class="eyebrow">A song for our day</p>
         <h2 id="music-title">Best Part</h2>
-        <p>Daniel Caesar feat. H.E.R.</p> 
-        <button class="music-play-button" id="music-play" type="button" disabled>Start the music</button>
-      </div>-->
+        <p>Daniel Caesar feat. H.E.R.</p> -->
+      <button class="music-play-button" id="music-play" type="button" disabled hidden>Play the song</button>
       <div id="music-player">
         <iframe
           class="music-track"
@@ -622,23 +620,9 @@
     }
 
     let spotifyController;
-    let musicStartRequested = false;
-    function startMusic() {
-      if (!spotifyController) {
-        musicStartRequested = true;
-        return;
-      }
-      musicStartRequested = false;
-      spotifyController.play();
-    }
-    function startMusicFromPage() {
-      startMusic();
-      window.removeEventListener("pointerdown", startMusicFromPage);
-      window.removeEventListener("keydown", startMusicFromPage);
-    }
-    window.addEventListener("pointerdown", startMusicFromPage);
-    window.addEventListener("keydown", startMusicFromPage);
-    musicPlayButton.addEventListener("click", startMusic);
+    musicPlayButton.addEventListener("click", () => {
+      if (spotifyController) spotifyController.play();
+    });
     window.onSpotifyIframeApiReady = (IFrameAPI) => {
       musicPlayer.querySelector("iframe").remove();
       IFrameAPI.createController(musicPlayer, {
@@ -647,18 +631,14 @@
         height: 152
       }, (controller) => {
         spotifyController = controller;
+        musicPlayButton.hidden = false;
         musicPlayButton.disabled = false;
         controller.addListener("playback_started", () => {
           musicPlayButton.hidden = true;
-          window.removeEventListener("pointerdown", startMusicFromPage);
-          window.removeEventListener("keydown", startMusicFromPage);
         });
         controller.addListener("ready", () => {
-          if (musicStartRequested) {
-            startMusic();
-          } else {
-            controller.play();
-          }
+          musicPlayButton.disabled = false;
+          controller.play();
         });
       });
     };
